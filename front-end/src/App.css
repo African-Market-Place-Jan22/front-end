@@ -176,3 +176,26 @@ input{
   margin: 10px;
   font-size: 1.5rem;
 }
+
+@media (max-width: 500px) {
+  .App-header {
+    width:90%;
+  }
+
+  .HomePage, .AccountPage{
+    width: 90%;
+    padding-bottom:20%;
+}
+
+.Instructions{
+  padding-right: 15%;
+}
+
+.TextBox{
+  padding-right:10%;
+}
+
+  .Title{
+    padding-left:25%;
+  }
+}
