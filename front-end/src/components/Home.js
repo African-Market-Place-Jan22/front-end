@@ -71,7 +71,7 @@ function Home()   {
                             />
                             {formErrors.password && <p>{formErrors.password}</p>}
                         </label>
-                        <button className = "LoginButton">Login</button>
+                        <button disabled={!(formValues.username || formValues.password)} className = "LoginButton">Login</button>
                     </form>
                     <div className = "buttons">
                         <button onClick={handleCreate} className = "CreateAccountButton">Create Account</button>
