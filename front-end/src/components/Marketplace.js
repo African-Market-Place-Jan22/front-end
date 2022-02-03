@@ -23,15 +23,21 @@ const Marketplace = () => {
         setSearchItem(e.target.value)
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('handle submit')
+    }
+
 return (
 
     <ComponentContainer>
         <h1>MarketPlace</h1>
-        <form>
+        <form onSubmit={handleSubmit}>
             <input
             type='text'
             placeholder="Search"
             onChange={changeHandler}
+            value={searchItem}
             />
             <button>Search</button>
         </form>
