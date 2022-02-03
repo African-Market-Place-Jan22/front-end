@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import axiosWithAuth from '../utils/axiosWithAuth';
 import { useHistory } from 'react-router-dom';
 
-
 const Marketplace = () => {
     const [items, setItems ] = useState([]);
     const { push } = useHistory();
@@ -23,6 +22,12 @@ return (
 
     <ComponentContainer>
         <h1>MarketPlace</h1>
+        <form>
+            <input
+            type='text'
+            placeholder="Search"
+            />
+        </form>
             <div className='body'>
                 <div className='all-items'>
                     {
