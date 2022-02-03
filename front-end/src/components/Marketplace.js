@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import axiosWithAuth from '../utils/axiosWithAuth';
 import { useHistory } from 'react-router-dom';
 
-
 const Marketplace = () => {
     const [items, setItems ] = useState([]);
+    const [ searchItem, setSearchItem ] = useState('')
     const { push } = useHistory();
 
     useEffect(() => {
@@ -19,10 +19,22 @@ const Marketplace = () => {
         })
     }, []);
 
+    const changeHandler = (e) => {
+        setSearchItem(e.target.value)
+    }
+
 return (
 
     <ComponentContainer>
         <h1>MarketPlace</h1>
+        <form>
+            <input
+            type='text'
+            placeholder="Search"
+            onChange={changeHandler}
+            />
+            <button>Search</button>
+        </form>
             <div className='body'>
                 <div className='all-items'>
                     {
