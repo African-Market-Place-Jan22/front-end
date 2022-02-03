@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 const Marketplace = () => {
     const [items, setItems ] = useState([]);
+    const [ searchItem, setSearchItem ] = useState('')
     const { push } = useHistory();
 
     useEffect(() => {
@@ -18,8 +19,8 @@ const Marketplace = () => {
         })
     }, []);
 
-    const changeHandler = () => {
-        console.log('firing')
+    const changeHandler = (e) => {
+        setSearchItem(e.target.value)
     }
 
 return (
