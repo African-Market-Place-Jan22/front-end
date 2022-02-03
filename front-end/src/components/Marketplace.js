@@ -18,6 +18,10 @@ const Marketplace = () => {
         })
     }, []);
 
+    const changeHandler = () => {
+        console.log('firing')
+    }
+
 return (
 
     <ComponentContainer>
@@ -26,6 +30,7 @@ return (
             <input
             type='text'
             placeholder="Search"
+            onChange={changeHandler}
             />
         </form>
             <div className='body'>
