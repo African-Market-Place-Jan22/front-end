@@ -1,7 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import axiosWithAuth from '../utils/axiosWithAuth';
-import validation from './validations/validation';
+import axios from 'axios';
+import schema from './validations/Schema';
+import * as yup from 'yup';
+
+
 
 const initialFormValues = {
     username: '',
@@ -12,29 +15,36 @@ const initialFormErrors = {
     password: ''
 };
 
+const initialDisabled = true;
+
 function Home()   {
     const { push } = useHistory();
     const [formValues, setFormValues] = useState(initialFormValues);
     const [formErrors, setFormErrors] = useState(initialFormErrors);
+    const [disabled, setDisabled] = useState(initialDisabled);
 
-     const handleChange = (e) => {
+    const validate = (name, value) => {
+        yup.reach(schema, name)
+            .validate(value)
+            .then(() => setFormErrors({ ...formErrors, [name]: ''}))
+            .catch(err => setFormErrors({ ...formErrors, [name]: err.errors[0] }))
+    };
+    
+    const handleChange = (e, name, value) => {
+        validate(name, value);
         setFormValues({
             ...formValues,
             [e.target.name]: e.target.value
         })
-    }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setFormErrors(validation(formValues))
-        axiosWithAuth()
-       .post('/api/auth/login', formValues)
+        axios.post('https://backend-african-marketplace.herokuapp.com/api/auth/login', formValues)
        .then(resp => {
-           console.log(resp);
-           localStorage.setItem('username', resp.data.username);
-           localStorage.setItem('password', resp.data.password);
            localStorage.setItem('token', resp.data.token);
-           push('/my-items');
+           localStorage.setItem('user_id', resp.data.user_id);
+           push('/marketplace');
        })
        .catch(err => {
            console.log(err);
@@ -42,10 +52,15 @@ function Home()   {
        })
     }
 
+    useEffect(() => {
+        schema.isValid(formValues).then((valid) => {
+          setDisabled(!valid);
+        });
+      }, [formValues]);
+
     const handleCreate = () => {
         push('/signup');
     }
-
 
     return (
         <div className='HomePage'>
@@ -71,7 +86,7 @@ function Home()   {
                             />
                             {formErrors.password && <p>{formErrors.password}</p>}
                         </label>
-                        <button disabled={!(formValues.username || formValues.password)} className = "LoginButton">Login</button>
+                        <button disabled={disabled} className = "LoginButton">Login</button>
                     </form>
                     <div className = "buttons">
                         <button onClick={handleCreate} className = "CreateAccountButton">Create Account</button>
