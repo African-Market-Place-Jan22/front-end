@@ -32,6 +32,7 @@ return (
             placeholder="Search"
             onChange={changeHandler}
             />
+            <button>Search</button>
         </form>
             <div className='body'>
                 <div className='all-items'>
